@@ -13,6 +13,8 @@ class APP():
         #GUI init passing the response function
         self.gui = GUI(self.chatbot_response)
 
+        print('[INFO]  Ready to start chatting')
+
     def load_data(self):
         try:
             #Load existing files
@@ -70,14 +72,19 @@ class APP():
         Then I have to call back the array which it is the firs row of the matrix.
         The results contain the probabilities of each class to be the right one"""
         #Filter out predictions below a probabilty threshold
-        error_threshold = 0.25
+        error_threshold = 0.8 #I need this high value because my greeting tag appears with 0.76 probability when I enter a random message
         results = [[index, result] for index, result in enumerate(results) if result > error_threshold]
         #We saved the index in the results for probability strength sorting without information loss
         results.sort(key= lambda x: x[1], reverse=True)
         #Return a list of dictionaries with the predicted classes and its probabilities
         results_dicts = []
-        for result in results:
-            results_dicts.append({'intent': self.classes[result[0]], 'probability': str(result[1])})
+
+        if len(results) > 0:
+            for result in results:
+                results_dicts.append({'intent': self.classes[result[0]], 'probability': str(result[1])})
+        else:
+            #If no tag predicted, then return a response of 'noanswer' tag
+            results_dicts.append({'intent': 'noanswer', 'probability': None})
 
         return results_dicts
 

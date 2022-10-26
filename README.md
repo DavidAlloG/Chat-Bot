@@ -19,5 +19,4 @@ nltk, keras, pickle, numpy, random, tkinter, tensorflow, json
 
 #### Ideas to improve
 - Try to improve the GUI, it looks very simple.
-- The bot does not work correctly when no tag is predicted.
-- Also it has problems with some typing misspells.
+- It has problems with some typing misspells and greeting tag appears too often
